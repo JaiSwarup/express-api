@@ -1,16 +1,13 @@
+import client from "@/libs/prismaClient";
 class FAQService {
   async getFAQs() {
-    // return await FAQModel.find();
-    return [
-      {
+    const faqs = await client.fAQ.create({
+      data: {
         question: "What is the capital of France?",
         answer: "Paris",
       },
-      {
-        question: "What is the capital of Spain?",
-        answer: "Madrid",
-      },
-    ];
+    });
+    return faqs;
   }
 }
 

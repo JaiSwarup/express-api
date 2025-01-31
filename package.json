@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "nodemon --watch src --exec ts-node src/index.ts",
+    "dev": "nodemon --watch . -r tsconfig-paths/register --exec ts-node src/index.ts",
     "build": "tsc --build",
     "start": "node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,16 +13,22 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@prisma/client": "^6.3.0",
+    "ejs": "^3.1.10",
     "express": "^4.21.2",
+    "express-ejs-layouts": "^2.5.1",
     "helmet": "^8.0.0",
     "module-alias": "^2.2.3",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
+    "@types/express-ejs-layouts": "^2.5.4",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.12.0",
+    "prisma": "^6.3.0",
     "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3"
   }

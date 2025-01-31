@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
-import faqService from "@/services/FaqService";
+import FaqService from "@/services/FaqService";
 
 class FAQController {
   async getFAQs(req: Request, res: Response) {
-    const faqs = await faqService.getFAQs();
-    res.send(faqs);
+    const faqs = await FaqService.getFAQs();
+    console.log(faqs);
+    return faqs;
   }
 }
 export default new FAQController();
