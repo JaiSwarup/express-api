@@ -1,0 +1,54 @@
+tags:
+  - name: faqs
+    description: faqs API
+
+paths:
+  # [GET] /api/v1/faqs:
+  /api/v1/faqs:
+    get:
+      tags:
+        - faqs
+      summary: Get All Faqs
+      parameters:
+        - name: q
+          in: query
+          description: Search term for FAQs
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: "OK"
+        500:
+          description: "Server Error"
+
+  # [GET] /api/v1/faqs/{id}:
+  /api/v1/faqs/{id}:
+    get:
+      tags:
+        - faqs
+      summary: Get Faq by ID
+      parameters:
+        - name: id
+          in: path
+          description: Faq ID
+          required: true
+          schema:
+            type: string
+        - name: lang
+          in: query
+          description: Language
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: "OK"
+        404:
+          description: "Not Found"
+        500:
+          description: "Server Error"
+
+schemes:
+  - https
+  - http
