@@ -1,0 +1,63 @@
+<form action="/api/v1/faqs/new" method="POST" id="faq-form">
+  <label for="question">Question</label>
+  <input type="text" name="question" id="question" />
+  <label for="answer">Answer</label>
+  <div name="answer" id="answer"></div>
+  <button id="reset" class="btn btn-primary" type="button">Reset</button>
+  <button id="save" class="btn btn-success" type="submit">Save</button>
+</form>
+<button id="preview" class="btn btn-secondary">Preivew HTML</button>
+
+<script>
+  const initialData = {
+    question: "Wall-E",
+    // `about` is a Delta object
+    // Learn more at: https://quilljs.com/docs/delta
+    answer: [
+      {
+        insert:
+          "A robot who has developed sentience, and is the only robot of his kind shown to be still functioning on Earth.\n",
+      },
+    ],
+  };
+
+  const quill = new Quill("#answer", {
+    theme: "snow",
+    module: {
+      toolbar: [
+        [{ header: "1" }, { header: "2" }, { font: [] }],
+        [{ size: [] }],
+        ["bold", "italic", "underline", "strike", "blockquote"],
+        [
+          { list: "ordered" },
+          { list: "bullet" },
+          { indent: "-1" },
+          { indent: "+1" },
+        ],
+        ["link", "image", "video"],
+        ["clean"],
+      ],
+    },
+  });
+  const previewButton = document.getElementById("preview");
+  const saveButton = document.getElementById("save");
+  const resetButton = document.getElementById("reset");
+  const form = document.querySelector("#faq-form");
+
+  const resetForm = () => {
+    document.querySelector('[name="question"]').value = initialData.question;
+    quill.setContents(initialData.answer);
+  };
+
+  resetForm();
+  resetButton.addEventListener("click", resetForm);
+
+  previewButton.addEventListener("click", () => {
+    const html = quill.root.innerHTML;
+    const win = window.open("", "_blank");
+    win.document.write(html);
+  });
+  form.addEventListener("formdata", (event) => {
+    event.formData.append("answer", JSON.stringify(quill.getContents()));
+  });
+</script>

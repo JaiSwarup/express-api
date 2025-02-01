@@ -1,8 +1,21 @@
-import faqroutes from "@/routes/faq";
+import { AdminController } from "@/controllers/AdminController";
+import FAQController from "@/controllers/FaqController";
 import { Router } from "express";
 
-const router = Router();
+class Server {
+  public router: Router;
+  public faqController: FAQController;
+  public adminController: AdminController;
+  constructor() {
+    this.router = Router();
+    this.faqController = new FAQController();
+    this.adminController = new AdminController();
+    this.routes();
+  }
+  private routes() {
+    this.router.use("/faqs", this.faqController.router);
+    this.router.use("/admin", this.adminController.router);
+  }
+}
 
-router.use("/faqs", faqroutes);
-
-export default router;
+export default Server;

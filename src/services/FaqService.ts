@@ -1,33 +1,25 @@
-import client from "@/libs/prismaClient";
+import FaqRepository from "@/repository/FaqRepostiory";
 class FAQService {
+  async createFAQ(arg0: { question: any; answer: any }) {
+    return await FaqRepository.createFAQ(arg0);
+  }
+  async updateFAQ(id: string, arg1: { question: any; answer: any }) {
+    return await FaqRepository.updateFAQ(id, arg1);
+  }
+  async deleteFAQ(id: string) {
+    return await FaqRepository.deleteFAQ(id);
+  }
   async searchFAQs(q: string) {
-    const faqs = await client.fAQ.findMany({
-      select: {
-        id: true,
-        question: true,
-        answer: true,
-      },
-      where: {
-        question: {
-          contains: q,
-          mode: "insensitive",
-        },
-      },
-    });
-    return faqs;
+    return await FaqRepository.searchFAQs(q);
   }
+
   async getFAQs() {
-    const faqs = await client.fAQ.findMany();
-    return faqs;
+    return await FaqRepository.getFAQs();
   }
+
   async getFAQ(id: string) {
-    const faq = await client.fAQ.findUnique({
-      where: {
-        id,
-      },
-    });
-    return faq;
+    return await FaqRepository.getFAQ(id);
   }
 }
 
-export default new FAQService();
+export default FAQService;
