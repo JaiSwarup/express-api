@@ -1,9 +1,34 @@
 import FaqRepository from "@/repository/FaqRepostiory";
+import { translateFaq } from "@/libs/translate";
 class FAQService {
-  async createFAQ(arg0: { question: any; answer: any }) {
+  async addTranslation(id: string, lang: string) {
+    try {
+      const existingTranslation = await FaqRepository.getTranslation(id, lang);
+      if (existingTranslation) {
+        throw new Error("Translation already exists");
+      }
+      const faq = await FaqRepository.getFAQ(id);
+      if (!faq) {
+        throw new Error("FAQ not found");
+      }
+      const [question, text] = await translateFaq(
+        [faq.question, faq.text],
+        lang
+      );
+      // console.log(res);
+
+      return await FaqRepository.addTranslation(id, lang, { question, text });
+    } catch (error) {
+      throw error;
+    }
+  }
+  async createFAQ(arg0: { question: string; answer: string; text: string }) {
     return await FaqRepository.createFAQ(arg0);
   }
-  async updateFAQ(id: string, arg1: { question: any; answer: any }) {
+  async updateFAQ(
+    id: string,
+    arg1: { question: string; answer: string; text: string }
+  ) {
     return await FaqRepository.updateFAQ(id, arg1);
   }
   async deleteFAQ(id: string) {
@@ -19,6 +44,10 @@ class FAQService {
 
   async getFAQ(id: string) {
     return await FaqRepository.getFAQ(id);
+  }
+
+  async getTranslation(id: string, lang: string) {
+    return await FaqRepository.getTranslation(id, lang);
   }
 }
 

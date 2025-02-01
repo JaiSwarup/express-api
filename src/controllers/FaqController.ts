@@ -11,6 +11,8 @@ class FAQController {
     this.routes();
   }
   routes() {
+    this.router.post("/:id/translate", this.addTranslation);
+
     this.router.get("/:id", this.getFAQ);
     this.router.put("/:id", this.updateFAQ);
     this.router.delete("/:id", this.deleteFAQ);
@@ -22,10 +24,11 @@ class FAQController {
     try {
       console.log(req.body);
       const { id } = req.params;
-      const { question, answer } = req.body;
+      const { question, answer, text } = req.body;
       await this.faqService.updateFAQ(id, {
         question,
         answer: JSON.parse(answer),
+        text,
       });
       res.status(200).json(req.body);
     } catch (error) {
@@ -55,6 +58,12 @@ class FAQController {
   public getFAQ = async (req: Request, res: Response): Promise<void> => {
     try {
       const { id } = req.params;
+      const { lang } = req.query;
+      if (lang) {
+        const data = await this.faqService.getTranslation(id, lang as string);
+        res.status(200).json(data);
+        return;
+      }
       const data = await this.faqService.getFAQ(id);
       res.status(200).json(data);
     } catch (error) {
@@ -64,14 +73,30 @@ class FAQController {
 
   private createFAQ = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { question, answer } = req.body;
+      const { question, answer, text } = req.body;
       await this.faqService.createFAQ({
         question,
         answer: JSON.parse(answer),
+        text,
       });
       res.status(200).json(req.body);
     } catch (error) {
       res.status(500).json({ message: error });
+    }
+  };
+
+  public addTranslation = async (
+    req: Request,
+    res: Response
+  ): Promise<void> => {
+    try {
+      const { id } = req.params;
+      const { lang } = req.query;
+      await this.faqService.addTranslation(id, lang as string);
+      res.status(200).json({ message: "Translation added" });
+    } catch (error: any) {
+      console.log(error);
+      res.status(500).json({ message: error.message });
     }
   };
 }

@@ -60,6 +60,7 @@
   });
   form.addEventListener("formdata", (event) => {
     event.formData.append("answer", JSON.stringify(quill.getContents()));
+    event.formData.append("text", quill.getText());
   });
 
   saveButton.addEventListener("click", () => {

@@ -9,12 +9,23 @@ const FaqRepository = client.$extends({
             id: true,
             question: true,
             answer: true,
+            text: true,
           },
           where: {
-            question: {
-              contains: q,
-              mode: "insensitive",
-            },
+            OR: [
+              {
+                question: {
+                  contains: q,
+                  mode: "insensitive",
+                },
+              },
+              {
+                text: {
+                  contains: q,
+                  mode: "insensitive",
+                },
+              },
+            ],
           },
         });
         return faqs;
@@ -24,6 +35,7 @@ const FaqRepository = client.$extends({
           select: {
             id: true,
             question: true,
+            text: true,
             answer: true,
           },
         });
@@ -37,13 +49,20 @@ const FaqRepository = client.$extends({
         });
         return faq;
       },
-      async createFAQ(data: { question: string; answer: string }) {
+      async createFAQ(data: {
+        question: string;
+        answer: string;
+        text: string;
+      }) {
         const faq = await client.fAQ.create({
           data,
         });
         return faq;
       },
-      async updateFAQ(id: string, data: { question: string; answer: string }) {
+      async updateFAQ(
+        id: string,
+        data: { question: string; answer: string; text: string }
+      ) {
         const faq = await client.fAQ.update({
           where: {
             id,
@@ -59,6 +78,30 @@ const FaqRepository = client.$extends({
           },
         });
         return faq;
+      },
+      async addTranslation(
+        id: string,
+        lang: string,
+        data: { question: string; text: string }
+      ) {
+        const translation = await client.translation.create({
+          data: {
+            lang,
+            faqId: id,
+            question: data.question,
+            text: data.text,
+          },
+        });
+        return translation;
+      },
+      async getTranslation(id: string, lang: string) {
+        const translation = await client.translation.findFirst({
+          where: {
+            lang,
+            faqId: id,
+          },
+        });
+        return translation;
       },
     },
   },

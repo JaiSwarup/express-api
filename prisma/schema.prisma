@@ -13,10 +13,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Translation {
+  id       String  @id @default(cuid()) @map("_id")
+  lang     String @default("en")
+  question String
+  text     String
+
+  faqId    String
+  faq      FAQ     @relation(fields: [faqId], references: [id])
+}
+
 model FAQ {
   id       String  @id @default(cuid()) @map("_id")
-  question  String
+  question  String 
+  text     String
   answer    Json
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  translations Translation[]
 }

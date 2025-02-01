@@ -3,7 +3,6 @@ tags:
     description: faqs API
 
 paths:
-  # [GET] /api/v1/faqs:
   /api/v1/faqs:
     get:
       tags:
@@ -19,6 +18,30 @@ paths:
       responses:
         200:
           description: "OK"
+        500:
+          description: "Server Error"
+    post:
+      tags:
+        - faqs
+      summary: Create Faq
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                question:
+                  type: string
+                answer:
+                  type: string
+                lang:
+                  type: string
+      responses:
+        201:
+          description: "Created"
+        400:
+          description: "Bad Request"
         500:
           description: "Server Error"
 
@@ -44,6 +67,86 @@ paths:
       responses:
         200:
           description: "OK"
+        404:
+          description: "Not Found"
+        500:
+          description: "Server Error"
+    put:
+      tags:
+        - faqs
+      summary: Update Faq
+      parameters:
+        - name: id
+          in: path
+          description: Faq ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                question:
+                  type: string
+                answer:
+                  type: string
+                lang:
+                  type: string
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "Bad Request"
+        404:
+          description: "Not Found"
+        500:
+          description: "Server Error"
+    delete:
+      tags:
+        - faqs
+      summary: Delete Faq
+      parameters:
+        - name: id
+          in: path
+          description: Faq ID
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: "No Content"
+        404:
+          description: "Not Found"
+        500:
+          description: "Server Error"
+
+  # [PUT] /api/v1/faqs/{id}/translate:
+  /api/v1/faqs/{id}/translate:
+    post:
+      tags:
+        - faqs
+      summary: Update Faq
+      parameters:
+        - name: id
+          in: path
+          description: Faq ID
+          required: true
+          schema:
+            type: string
+        - name: lang
+          in: query
+          description: Language
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "Bad Request"
         404:
           description: "Not Found"
         500:

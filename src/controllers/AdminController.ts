@@ -19,9 +19,9 @@ export class AdminController {
   }
 
   public getFAQs = async (req: Request, res: Response): Promise<void> => {
-    console.log("first");
     try {
       const faqs = await this.faqService.getFAQs();
+      console.log(faqs);
       res.render("faqs", { faqs });
     } catch (error) {
       res.render("error", { message: error });

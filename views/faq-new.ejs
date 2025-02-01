@@ -1,4 +1,4 @@
-<form action="/api/v1/faqs/new" method="POST" id="faq-form">
+<form action="/api/v1/faqs/" method="POST" id="faq-form">
   <label for="question">Question</label>
   <input type="text" name="question" id="question" />
   <label for="answer">Answer</label>
@@ -10,13 +10,12 @@
 
 <script>
   const initialData = {
-    question: "Wall-E",
+    question: "Your Faq Question",
     // `about` is a Delta object
     // Learn more at: https://quilljs.com/docs/delta
     answer: [
       {
-        insert:
-          "A robot who has developed sentience, and is the only robot of his kind shown to be still functioning on Earth.\n",
+        insert: "Start Here...",
       },
     ],
   };
@@ -59,5 +58,6 @@
   });
   form.addEventListener("formdata", (event) => {
     event.formData.append("answer", JSON.stringify(quill.getContents()));
+    event.formData.append("text", quill.getText());
   });
 </script>
