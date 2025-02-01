@@ -11,10 +11,37 @@ class FAQController {
     this.routes();
   }
   routes() {
-    this.router.post("/new", this.createFAQ);
-    this.router.use("/:id", this.getFAQ);
-    this.router.use("/", this.getFAQs);
+    this.router.get("/:id", this.getFAQ);
+    this.router.put("/:id", this.updateFAQ);
+    this.router.delete("/:id", this.deleteFAQ);
+
+    this.router.post("/", this.createFAQ);
+    this.router.get("/", this.getFAQs);
   }
+  public updateFAQ = async (req: Request, res: Response): Promise<void> => {
+    try {
+      console.log(req.body);
+      const { id } = req.params;
+      const { question, answer } = req.body;
+      await this.faqService.updateFAQ(id, {
+        question,
+        answer: JSON.parse(answer),
+      });
+      res.status(200).json(req.body);
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+  };
+
+  public deleteFAQ = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { id } = req.params;
+      await this.faqService.deleteFAQ(id);
+      res.status(200).json({ message: "FAQ deleted" });
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+  };
 
   public getFAQs = async (req: Request, res: Response): Promise<void> => {
     try {

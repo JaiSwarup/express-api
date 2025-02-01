@@ -1,3 +1,27 @@
 <h1><%= faq.question %></h1>
-<p><%= faq.answer %></p>
-im sol lol
+<div id="answer"></div>
+
+<script>
+    const id = '<%- faq.id %>';
+  // prettier-ignore
+  const question = '<%- faq.question %>';
+  // ignore the escape characters
+  // prettier-ignore
+  const value = <%- JSON.stringify(faq.answer) %>;
+  console.log(value)
+  const initialData = {
+    question: question,
+    // `about` is a Delta object
+    // Learn more at: https://quilljs.com/docs/delta
+    answer: value.ops
+  };
+
+  const quill = new Quill("#answer", {
+    theme: "bubble",
+  });
+  quill.disable();
+
+  (() => {
+    quill.setContents(initialData.answer);
+  })();
+</script>

@@ -1,10 +1,10 @@
-<form action="/api/v1/faqs/new" method="POST" id="faq-form">
+<form action="/api/v1/faqs/<%- id %>/edit" method="POST" id="faq-form">
   <label for="question">Question</label>
   <input type="text" name="question" id="question" />
   <label for="answer">Answer</label>
   <div name="answer" id="answer"></div>
   <button id="reset" class="btn btn-primary" type="button">Reset</button>
-  <button id="save" class="btn btn-success" type="submit">Save</button>
+  <button id="save" class="btn btn-success" type="button">Save</button>
 </form>
 <button id="preview" class="btn btn-secondary">Preivew HTML</button>
 
@@ -13,8 +13,8 @@
   const id = '<%- id %>';
   // prettier-ignore
   const question = '<%- question %>';
-  // prettier-ignore
   // ignore the escape characters
+  // prettier-ignore
   const value = <%- JSON.stringify(answer) %>;
 
   const initialData = {
@@ -60,5 +60,20 @@
   });
   form.addEventListener("formdata", (event) => {
     event.formData.append("answer", JSON.stringify(quill.getContents()));
+  });
+
+  saveButton.addEventListener("click", () => {
+    const context = {}
+    const formData = new FormData(form);
+    for (var pair of formData.entries()) {
+      context[pair[0]] = pair[1];
+    }
+    fetch(`/api/v1/faqs/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(context),
+    })
   });
 </script>

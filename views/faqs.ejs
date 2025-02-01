@@ -9,7 +9,6 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Id</th>
       <th scope="col">Question</th>
       <th scope="col">Answer</th>
       <th scope="col"></th>
@@ -20,20 +19,19 @@
     <% faqs.forEach(faq =>{ %>
     <tr>
       <th scope="row" class="fit">1</th>
-      <td class="fit">
-        <!-- prettier ignore-->
-        <%= faq.id %>
-    </td>
-      <td class="fit">
+      <td class="">
         <!-- prettier ignore-->
         <%= faq.question %>
     </td>
-      <td class="fit">
+      <td class="text-wrap">
         <!-- prettier ignore-->
-        <%= faq.answer %>
+        <%faq.answer.ops.forEach(op=>{%>
+        <%=op.insert%>
+        <%}) %>
     </td>
       <td class="fit">
         <!--prettier-ignore-->
+        <a href="/api/v1/admin/<%= faq.id %>" class="btn btn-info">View</a>
         <a href="/api/v1/admin/<%= faq.id %>/edit" class="btn btn-primary">Edit</a>
         <!-- prettier-ignore-->
         <a href="/api/v1/admin/<%= faq.id %>/delete" class="btn btn-danger">Delete</a>
