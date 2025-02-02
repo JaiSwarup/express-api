@@ -81,11 +81,11 @@ class FAQController {
     try {
       const { question, answer, text } = req.body;
       console.log(answer);
-      // await this.faqService.createFAQ({
-      //   question,
-      //   answer: JSON.parse(answer),
-      //   text,
-      // });
+      await this.faqService.createFAQ({
+        question,
+        answer: JSON.parse(answer),
+        text,
+      });
       res.status(200).json(req.body);
     } catch (error) {
       res.status(500).json({ message: error });
