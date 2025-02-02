@@ -75,8 +75,4 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use("/api/v1", new Server().router);
 
-app.listen(config.port, async () => {
-  await connectToDatabase();
-  await connectToRedis();
-  console.log(`Server is running on http://localhost:${config.port}`);
-});
+export default app;
