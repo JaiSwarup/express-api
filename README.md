@@ -3,11 +3,15 @@
 Submission for backend assignment BharatFD.
 Node.js/Express.js Api that can create, read, update and delete FAQ.
 
-1. Uses MongoDB for Database using Prisma ORM.
-2. Supports Caching using Redis.
-3. Implemented WYSIWYG Editor using Quill
+1. Uses `MongoDB` for Database using `Prisma ORM`.
+2. Supports Caching using `Redis`.
+3. Implemented WYSIWYG Editor using `Quill`
 4. Rest API Implemented
-5. Docker support
+5. Translatation using `google-translate-x` api
+6. Admin Dashboard using `EJS`
+7. Testing using `Vitest`
+8. API documentation using `Swagger`
+9. `Docker` support
 
 ## Installation
 
