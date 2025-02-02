@@ -35,7 +35,7 @@ paths:
                   type: string
                 answer:
                   type: string
-                lang:
+                text:
                   type: string
       responses:
         201:

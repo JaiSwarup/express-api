@@ -20,6 +20,9 @@ describe("FAQ API Endpoints", async () => {
     expect(res.status).toBe(200);
     expect(res.body).toEqual([
       {
+        id: "cm6mmc8450000vy2k7zc9h3uw",
+        question: "Wall-E",
+        text: "A robot who has developed sentience, and is the only robot of his kind shown to be still functioning on Earth.\n",
         answer: {
           ops: [
             {
@@ -37,11 +40,11 @@ describe("FAQ API Endpoints", async () => {
             },
           ],
         },
-        id: "cm6mmc8450000vy2k7zc9h3uw",
-        question: "Wall-E",
-        text: "A robot who has developed sentience, and is the only robot of his kind shown to be still functioning on Earth.\n",
       },
       {
+        id: "cm6mmigor0000vy6gmstuhl62",
+        question: "Your Faq Question",
+        text: "Start Here...\r\n",
         answer: {
           ops: [
             {
@@ -49,9 +52,6 @@ describe("FAQ API Endpoints", async () => {
             },
           ],
         },
-        id: "cm6mmigor0000vy6gmstuhl62",
-        question: "Your Faq Question",
-        text: "Start Here...\n",
       },
     ]);
   });
@@ -70,43 +70,43 @@ describe("FAQ API Endpoints", async () => {
 
   it("should create an FAQ", async () => {
     FAQService.prototype.createFAQ = vi.fn().mockResolvedValue({
-      id: "1",
       question: "Q1",
-      answer: "A1",
+      answer: '{"ops":[{"insert":"Start Here...\\n"}]}',
+      text: "Start Here...\r\n",
     });
 
-    const res = await request(app)
-      .post("/api/v1/faqs")
-      .send({
-        question: "Q1",
-        answer: {
-          ops: [
-            {
-              attributes: {
-                bold: true,
-              },
-              insert: "My Name is Chicka Chicka Slim shady",
-            },
-          ],
-        },
-        text: "My Name is Chicka Chicka Slim shady",
-      });
+    const res = await request(app).post("/api/v1/faqs").send({
+      question: "Q1",
+      answer: '{"ops":[{"insert":"Start Here...\\n"}]}',
+      text: "Start Here...\r\n",
+    });
+    console.log(res.body);
     expect(res.status).toBe(200);
-    expect(res.body).toEqual({ id: "1", question: "Q1", answer: "A1" });
+    expect(res.body).toEqual({
+      question: "Q1",
+      answer: '{"ops":[{"insert":"Start Here...\\n"}]}',
+      text: "Start Here...\r\n",
+    });
   });
 
   it("should update an FAQ", async () => {
     FAQService.prototype.updateFAQ = vi.fn().mockResolvedValue({
-      id: "1",
       question: "Updated Q1",
-      answer: "Updated A1",
+      answer: '"ops":[{"insert":"Start Here...\\n"}]}',
+      text: "Start Here...\r\n",
     });
 
-    const res = await request(app)
-      .put("/api/v1/faqs/1")
-      .send({ question: "Updated Q1", answer: "Updated A1" });
+    const res = await request(app).put("/api/v1/faqs/1").send({
+      question: "Updated Q1",
+      answer: '{"ops":[{"insert":"Start Here...\\n"}]}',
+      text: "Start Here...\r\n",
+    });
     expect(res.status).toBe(200);
-    expect(res.body).toEqual({ question: "Updated Q1", answer: "Updated A1" });
+    expect(res.body).toEqual({
+      question: "Updated Q1",
+      answer: '{"ops":[{"insert":"Start Here...\\n"}]}',
+      text: "Start Here...\r\n",
+    });
   });
 
   it("should delete an FAQ", async () => {
