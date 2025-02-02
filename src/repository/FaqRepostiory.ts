@@ -1,10 +1,10 @@
-import client from "@/libs/prismaClient";
+import prismaClient from "@/libs/prismaClient";
 
-const FaqRepository = client.$extends({
+const FaqRepository = prismaClient.$extends({
   model: {
     fAQ: {
       async searchFAQs(q: string) {
-        const faqs = await client.fAQ.findMany({
+        const faqs = await prismaClient.fAQ.findMany({
           select: {
             id: true,
             question: true,
@@ -31,7 +31,7 @@ const FaqRepository = client.$extends({
         return faqs;
       },
       async getFAQs() {
-        const faqs = await client.fAQ.findMany({
+        const faqs = await prismaClient.fAQ.findMany({
           select: {
             id: true,
             question: true,
@@ -42,7 +42,7 @@ const FaqRepository = client.$extends({
         return faqs;
       },
       async getFAQ(id: string) {
-        const faq = await client.fAQ.findUnique({
+        const faq = await prismaClient.fAQ.findUnique({
           where: {
             id,
           },
@@ -54,7 +54,7 @@ const FaqRepository = client.$extends({
         answer: string;
         text: string;
       }) {
-        const faq = await client.fAQ.create({
+        const faq = await prismaClient.fAQ.create({
           data,
         });
         return faq;
@@ -63,7 +63,7 @@ const FaqRepository = client.$extends({
         id: string,
         data: { question: string; answer: string; text: string }
       ) {
-        const faq = await client.fAQ.update({
+        const faq = await prismaClient.fAQ.update({
           where: {
             id,
           },
@@ -72,7 +72,7 @@ const FaqRepository = client.$extends({
         return faq;
       },
       async deleteFAQ(id: string) {
-        const faq = await client.fAQ.delete({
+        const faq = await prismaClient.fAQ.delete({
           where: {
             id,
           },
@@ -84,7 +84,7 @@ const FaqRepository = client.$extends({
         lang: string,
         data: { question: string; text: string }
       ) {
-        const translation = await client.translation.create({
+        const translation = await prismaClient.translation.create({
           data: {
             lang,
             faqId: id,
@@ -95,7 +95,7 @@ const FaqRepository = client.$extends({
         return translation;
       },
       async getTranslation(id: string, lang: string) {
-        const translation = await client.translation.findFirst({
+        const translation = await prismaClient.translation.findFirst({
           where: {
             lang,
             faqId: id,

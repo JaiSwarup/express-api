@@ -44,6 +44,7 @@ paths:
           description: "Bad Request"
         500:
           description: "Server Error"
+      x-hidden: true
 
   # [GET] /api/v1/faqs/{id}:
   /api/v1/faqs/{id}:

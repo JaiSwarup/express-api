@@ -1,16 +1,17 @@
-import client from "@/libs/prismaClient";
+import prismaClient from "@/libs/prismaClient";
 import config from ".";
 
 const MAX_RETRIES = 5;
-const RETRY_INTERVAL = 1000;
+const RETRY_INTERVAL = 100;
 
 const connectToDatabase = async () => {
+  console.log("config", config);
   if (!config.dbUri) {
     throw new Error("Missing DATABASE_URI in config");
   }
   for (let i = 0; i < MAX_RETRIES; i++) {
     try {
-      await client.$connect();
+      await prismaClient.$connect();
 
       console.log(`🗄️ [database]: Database Connected SUCCESSFULLY`);
       return;

@@ -2,6 +2,9 @@ import express from "express";
 import config from "./config";
 import morgan from "morgan";
 import helmet from "helmet";
+import redisClient from "./libs/redisClient";
+import connectToDatabase from "./config/dbConfig";
+import { connectToRedis } from "./config/cacheConfig";
 import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
 import expressLayout from "express-ejs-layouts";
@@ -53,10 +56,10 @@ const options = {
   definition: {
     openapi: "3.1.0",
     info: {
-      title: "Express API with Swagger",
-      version: "0.1.0",
+      title: "FAQ API",
+      version: "1.0.0",
       description:
-        "This is a simple CRUD API application made with Express and documented with Swagger",
+        "A simple Express/Node.js FAQ API with admin dashboard.\n Uses Prisma ORM and MongoDB for data storage and Redis for cache.",
     },
     servers: [
       {
@@ -73,6 +76,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use("/api/v1", new Server().router);
 
-app.listen(config.port, () => {
+app.listen(config.port, async () => {
+  await connectToDatabase();
+  await connectToRedis();
   console.log(`Server is running on http://localhost:${config.port}`);
 });
