@@ -1,6 +1,7 @@
 import { createClient, RedisClientType } from "redis";
 
 declare global {
+  // eslint-disable-next-line
   var redis: RedisClientType | undefined;
 }
 

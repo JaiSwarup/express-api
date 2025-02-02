@@ -98,11 +98,17 @@ class FAQController {
     try {
       const { id } = req.params;
       const { lang } = req.query;
-      await this.faqService.addTranslation(id, lang as string);
-      res.status(200).json({ message: "Translation added" });
-    } catch (error: any) {
+      const newTranslation = await this.faqService.addTranslation(
+        id,
+        lang as string
+      );
+      res.status(200).json(newTranslation);
+    } catch (error) {
       console.log(error);
-      res.status(500).json({ message: error.message });
+      if (error instanceof Error) {
+        res.status(500).json({ message: error.message });
+      }
+      res.status(500).json({ message: "Internal server error" });
     }
   };
 }

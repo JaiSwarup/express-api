@@ -121,7 +121,10 @@ export const translateFaq = async (faq: string[], lang: string) => {
     const translator = new Translator({ to: lang });
     const translatedFaq = await translator.translate(faq);
     return translatedFaq.map((t) => t.text);
-  } catch (error: any) {
-    throw new Error(error.message);
+  } catch (error) {
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error("Something went wrong");
   }
 };

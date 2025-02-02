@@ -1,4 +1,3 @@
-import config from ".";
 import redisClient from "@/libs/redisClient";
 
 export async function connectToRedis() {

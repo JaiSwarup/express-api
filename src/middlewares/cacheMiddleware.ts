@@ -1,6 +1,5 @@
 import { Response, Request, NextFunction } from "express";
 import redisClient from "@/libs/redisClient";
-import { promisify } from "util";
 
 export const faqCache = async (
   req: Request,

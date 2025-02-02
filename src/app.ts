@@ -2,7 +2,6 @@ import express from "express";
 import config from "./config";
 import morgan from "morgan";
 import helmet from "helmet";
-import redisClient from "./libs/redisClient";
 import connectToDatabase from "./config/dbConfig";
 import { connectToRedis } from "./config/cacheConfig";
 import swaggerUi from "swagger-ui-express";
@@ -21,15 +20,15 @@ app.set("layout", "./layouts/main");
 app.use(express.json());
 app.use(morgan("dev"));
 const scriptSources = ["'self'", "'unsafe-inline'"];
-const styleSources = ["'self'", "'unsafe-inline'"];
-const fontSources = ["'self'"];
+// const styleSources = ["'self'", "'unsafe-inline'"];
+// const fontSources = ["'self'"];
 const imgSources = [
   "'self'",
   "https://github.com",
   "https://avatars.githubusercontent.com",
 ];
 const connectSources = ["'self'"];
-const frameSources = ["'self'"];
+// const frameSources = ["'self'"];
 const scriptSourcesElem = [
   "'self'",
   "https://cdn.jsdelivr.net/",

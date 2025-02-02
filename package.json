@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "nodemon --watch . -r tsconfig-paths/register --exec ts-node src/app.ts",
     "build": "tsc --build",
+    "lint": "eslint",
     "start": "node dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -29,15 +30,19 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
+    "@eslint/js": "^9.19.0",
     "@types/express": "^5.0.0",
     "@types/express-ejs-layouts": "^2.5.4",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.12.0",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.7",
+    "eslint": "^9.19.0",
+    "globals": "^15.14.0",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.22.0"
   }
 }
